@@ -14,9 +14,9 @@ namespace test
         {
             product = new Product
             {
-                Price = 2300,
-                ProductId = 1005,
-                ProductName = "Timex sports watch for men"
+                Price = 1000,
+                ProductId = 1001,
+                ProductName = "Timex sports pant for men"
             };
         }
 

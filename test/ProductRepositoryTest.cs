@@ -12,8 +12,8 @@ namespace test
     public class ProductRepositoryTest
     {
         readonly DataContext context;
-        readonly ProductRepository repository; 
-        public  ProductRepositoryTest()
+        readonly ProductRepository repository;
+        public ProductRepositoryTest()
         {
             string folder = "test";
             int rootPosition = Environment.CurrentDirectory.IndexOf("bin");
@@ -28,10 +28,10 @@ namespace test
         {
             var product = new Product
             {
-                ProductId = 1001,
-                ProductName = "Titan white square dial watch for men",
-                Price = 2500,
-                InStock = true
+                PdId = 1001,
+                PdName = "Titan white square dial watch for men",
+                PdCost = 2500,
+                PdAvailability = true
             };
             repository.AddProduct(product);
 
@@ -42,17 +42,18 @@ namespace test
         [Test, Order(1)]
         public void Should_AddProduct_Return_1002()
         {
-            var product = new Product{
-                    ProductId = 1001,
-                    ProductName = "Titan black dial watch for women",
-                    Price = 2200,
-                    InStock = true
-                };
+            var product = new Product
+            {
+                PdId = 1001,
+                PdName = "Titan black dial watch for women",
+                PdCost = 2200,
+                PdAvailability = true
+            };
 
             repository.AddProduct(product);
 
             Assert.That(repository.GetAllProducts(), Has.Count.EqualTo(2), message: "Count of total products must be 2");
-            
+
         }
 
         [Test, Order(2)]
@@ -60,8 +61,8 @@ namespace test
         {
             var result = repository.GetProduct(1001);
 
-            Assert.That(result, Is.Not.Null,message:"Product Cannot be Null");
-            Assert.That(result.ProductName, Is.EqualTo("Titan white square dial watch for men"), message: "Product Name must be \'Titan white square dial watch for men\'");
+            Assert.That(result, Is.Not.Null, message: "Product Cannot be Null");
+            Assert.That(result.PdName, Is.EqualTo("Titan white square dial watch for men"), message: "Product Name must be \'Titan white square dial watch for men\'");
 
         }
         [Test, Order(3)]
@@ -70,7 +71,7 @@ namespace test
             var result = repository.GetProduct("Titan black dial watch for women");
 
             Assert.That(result, Is.Not.Null, message: "Product Cannot be Null");
-            Assert.That(result.Price, Is.EqualTo(2200), message: "Price must be 2200");
+            Assert.That(result.PdCost, Is.EqualTo(2200), message: "Price must be 2200");
         }
 
         [Test, Order(4)]
@@ -89,7 +90,7 @@ namespace test
 
             Assert.That(result, Is.True, message: "RemoveProduct() should return true for valid product id");
             Assert.That(repository.GetAllProducts(), Has.Count.EqualTo(1), message: "Count of products should be 1");
-            
+
         }
 
         [Test, Order(6)]

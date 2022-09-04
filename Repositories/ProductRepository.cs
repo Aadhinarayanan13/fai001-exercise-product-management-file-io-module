@@ -10,18 +10,33 @@ namespace Repositories
     {
         // declare field of type DataContext
 
-        public ProductRepository(<parameter>)
+        public DataContext context = null;
+      
+        List<Product> products = new List<Product>();
+
+        public ProductRepository(string filename, string path)
         {
+            DataContext context = new DataContext(filename, path);
             //initialize the DataContext field with parameter passed    
         }
+
+        public ProductRepository(DataContext context)
+        {
+            this.context = context;
+        }
+
+
+
+
 
         /*
          * this method should accept product data and add it to the product collection
          * 
          */
-        public <return_type> AddProduct(<parameter>)
+        public void AddProduct(Product product)
         {
-            // code to add product to file, ensuring that product is not null
+            products.Add(product);
+
         }
 
 
@@ -31,8 +46,29 @@ namespace Repositories
          * 
          * the method should return true for success and false for invalid id 
          */
-        public <return_type> RemoveProduct(<parameter>)
+        public bool RemoveProduct(int productID)
         {
+            List<Product> products = GetAllProducts();
+            Product product = new Product();
+             
+           
+                foreach (Product p in products)
+                {
+
+                if(p.PdId==productID)
+                {
+                    product.PdId = p.PdId;
+                    product.PdName = p.PdName;
+                    product.PdCost = p.PdCost;
+                    product.PdAvailability = p.PdAvailability;
+                    products.Remove(product);
+                    return true;
+                }
+                   
+                }
+            
+                return false;
+          
             // code to remove product by the id provided from file as parameter    
         }
 
@@ -43,8 +79,29 @@ namespace Repositories
          * 
          * the method should return null for non-matching product name
          */
-        public <return_type> GetProduct(<parameter>)
+        public Product GetProduct(string productName)
         {
+            List<Product> products = GetAllProducts();
+            Product product = new Product();
+            if (products.Count > 0)
+            {
+                foreach (Product p in products)
+                {
+                    if (p.PdName == productName)
+                    {
+                        product.PdId = p.PdId;
+                        product.PdName = p.PdName;
+                        product.PdCost = p.PdCost;
+                        product.PdAvailability = p.PdAvailability;
+                    }
+                }
+
+                return product;
+            }
+            else
+                return null;
+
+
 
         }
 
@@ -55,17 +112,37 @@ namespace Repositories
          * 
          * the method should return null for non-matching product id
          */
-        public <return_type> GetProduct(<parameter>)
+        public Product GetProduct(int productId)
         {
+            List<Product> products = GetAllProducts();
+            Product product = new Product();
+            if (products.Count > 0)
+            {
+                foreach (Product p in products)
+                {
+                    if (p.PdId == productId)
+                    {
+                        product.PdId = p.PdId;
+                        product.PdName = p.PdName;
+                        product.PdCost = p.PdCost;
+                        product.PdAvailability = p.PdAvailability;
+                    }
+                }
 
+                return product;
+            }
+            else
+                return null;
         }
 
-        
+
         /*
          * this method should return all items from the product collection
          */
-        public <return_type> GetAllProducts()
+        public List<Product> GetAllProducts()
         {
+
+            return context.ReadProducts();
 
         }
     }
